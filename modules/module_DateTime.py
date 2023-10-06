@@ -1,8 +1,8 @@
 import datetime
 import re
-import  random
+import random
 
-#Diccionario de texto a número horario
+# Diccionario de texto a número horario
 mapeo_hora = {
     "cero": 0,
     "uno": 1,
@@ -65,59 +65,79 @@ mapeo_hora = {
     "cincuenta y ocho": 58,
     "cincuenta y nueve": 59
 }
+meses = {
+    1: "Enero",
+    2: "Febrero",
+    3: "Marzo",
+    4: "Abril",
+    5: "Mayo",
+    6: "Junio",
+    7: "Julio",
+    8: "Agosto",
+    9: "Septiembre",
+    10: "Octubre",
+    11: "Noviembre",
+    12: "Diciembre"
+}
 
-#Obtengo la fecha y la hora actual
+# Obtengo la fecha y la hora actual
 now = datetime.datetime.now()
 
-#accedo a los componentes de forma individual
+# Accedo a los componentes de forma individual
 current_year = now.year
+print(current_year)
 current_month = now.month
 current_day = now.day
 current_hour = now.strftime("%H:%M")
 
+
+# Manejo de comandos de DateTime
 def initial_greetings(greeting, user_name):
     name = user_name
     if re.search(r'buenos días|buenos días aurora|buen día|buen día aurora', greeting, re.IGNORECASE):
-        saludo = random.choice(["Buenos días " +name, "Hola " +name, "Buen día "+name])
+        saludo = random.choice([f"Buenos días {name}", f"Hola {name}", f"Buen día {name}"])
         return saludo
     elif re.search(r'buenas tardes|buenas tardes aurora', greeting, re.IGNORECASE):
-        saludo = random.choice(["Buenas tardes "+name, "Hola "+name])
+        saludo = random.choice([f"Buenas tardes {name}", f"Hola {name}"])
         return saludo
     elif re.search(r'buenas noches|buenas noches aurora', greeting, re.IGNORECASE):
-        saludo = random.choice(["Buenas noches "+name, "Hola "+name])
+        saludo = random.choice([f"Buenas noches {name}", f"Hola {name}"])
         return saludo
 
 
-#la funcion se ejecuta pero devuelve valores 0 en los print de minutos y hora
-def handle_hour_in_words(hour_words):
-    print(hour_words)
-    try:
-        hour_words = hour_words.replace(" y ", " ").replace(" ", "")
+def hour_now():
+    hour_now = random.choice([f"Son las {current_hour}",
+                              f"Es la hora {current_hour}",
+                              f"La hora es {current_hour}"])
+    return hour_now
 
-        words = hour_words.split()
-        hour_f = mapeo_hora.get(words[0], 0)
-        minutes_f = sum(mapeo_hora.get(word, 0) for word in words[1:])
 
-        print("Horas:", hour_f)
-        print("Minutos:", minutes_f)
+def date():
+    day = str(current_day)
+    month = meses.get(current_month, "Mes no reconocido")
+    date_now = random.choice([f"Hoy es {day} de {month}",
+                              f"{day} de {month}",
+                              f"El día de hoy es {day} de {month}",
+                              f"La fecha actual es {day} de {month}"])
+    return date_now
 
-        # Obtener la hora actual
-        current_time = datetime.datetime.now()
 
-        # Crear la hora objetivo
-        target_time = current_time.replace(hour=hour_f, minute=minutes_f)
+def month_now():
+    month = meses.get(current_month, "Mes no reconocido")
+    month_reply = random.choice([f"El mes actual es {month}",
+                                 f"Estamos en el mes de {month}",
+                                 f"Estamos en {month}",
+                                 f"Estamos en pleno {month}"])
 
-        # Calcular la diferencia de tiempo en minutos
-        time_difference = (target_time - current_time).total_seconds() / 60
+    return month_reply
 
-        # Imprimir los minutos faltantes
-        if time_difference > 0:
-            reply = f"Faltan {int(time_difference)} minutos para que sean las {hour_words}"
 
-        else:
-            reply = f"Ya son más de las {hour_words}"
-
-            return reply
-
-    except Exception as e:
-        print("Error:", e)
+def year_now():
+    year = current_year
+    year_reply = random.choice([f"Estamos en el año {year}",
+                                f"Estamos en el {year}",
+                                f"El año corriente es {year}",
+                                f"El año en curso es {year}",
+                                f"Nos encontramos en el año {year},"
+                                f"Estamos viviendo en el año {year}"])
+    return year_reply

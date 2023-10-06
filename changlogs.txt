@@ -1,0 +1,21 @@
+
+##########Actualizaciones del código desde la v0.5##########
+
+#Actualización v.0.5.14
+-----------------------------------------------------------------------------------------------------
+* Se agregó el módulo DateTime (Manejo de tiempo)
+* Se corrigió errores de ejecución en el código base;
+* Se agregaron un comando nuevo de saludo al iniciar el programa;
+* Se agregó un comando de olvidar el pedido de comando mientras está en escucha del mismo;
+* Se agregó el modulo commands
+* Se corrigió el error que no permitía que los comandos se ejecutarán correctamente como se esperaba,
+  agregando la variable command en la función command_normal_handle y command_normal_handle;
+* Se modificó el funcionamiento de la ejecución de los comandos
+* Se solucionó el valor "none" que retornaba la función  de greetings;
+* Sequitó la redundancia del código en la función que ejecuta el agradecimiento, en el modulo command;
+* Se agregó el comando para pedir la hora actual;
+* Se agregó el comando para pedir el mes actual;
+* Se agregó el comando para pedir el año actual;
+* Correcciones menores en la codificación.
+
+
