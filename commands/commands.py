@@ -1,9 +1,7 @@
 import random
-import re
-from modules import module_DateTime
 
 
-# Comandos de corte y agradecimiento
+#--- Comandos de corte y agradecimiento ---#
 def cut(user_name):
     name = user_name
     reply = random.choice([f"Bueno {name}",
@@ -25,5 +23,3 @@ def gratitude(tk, user_name):
                            "De nada, estoy aquí para ayudarte",
                            f"De nada {name}, estoy aquí para ayudarte"])
     return reply
-
-# Comandos

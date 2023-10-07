@@ -1,8 +1,9 @@
 import datetime
 import re
+import pytz
 import random
 
-# Diccionario de texto a número horario
+# ----------Diccionario de HORA----------#
 mapeo_hora = {
     "cero": 0,
     "uno": 1,
@@ -65,6 +66,8 @@ mapeo_hora = {
     "cincuenta y ocho": 58,
     "cincuenta y nueve": 59
 }
+
+# ----------Diccionario de MESES----------#
 meses = {
     1: "Enero",
     2: "Febrero",
@@ -78,6 +81,35 @@ meses = {
     10: "Octubre",
     11: "Noviembre",
     12: "Diciembre"
+}
+
+# ----------Diccionario de ZONA HORARIA----------#
+hour_zone = {
+    # --------Sur-América--------#
+    'Argentina': 'America/Argentina/Buenos_Aires',
+    'Bolivia': 'America/La_Paz',
+    'Brasil': 'America/Sao_Paulo',
+    'Chile': 'America/Santiago',
+    'Colombia': 'America/Bogota',
+    'Ecuador': 'America/Guayaquil',
+    'Guyana': 'America/Guyana',
+    'Paraguay': 'America/Asuncion',
+    'Perú': 'America/Lima',
+    'Uruguay': 'America/Montevideo',
+    'Venezuela': 'America/Caracas',
+
+    # --------América central--------#
+    'Costa Rica': 'America/Costa_Rica',
+    'El Salvador': 'America/El_Salvador',
+    'Guatemala': 'America/Guatemala',
+    'Honduras': 'America/Tegucigalpa',
+    'Nicaragua': 'America/Managua',
+    'Panamá': 'America/Panama',
+
+    # --------Norte América--------#
+    'Canadá': 'America/Toronto',
+    'Estados Unidos': 'America/New_York',
+    'México': 'America/Mexico_City'
 }
 
 # Obtengo la fecha y la hora actual
@@ -141,3 +173,29 @@ def year_now():
                                 f"Nos encontramos en el año {year},"
                                 f"Estamos viviendo en el año {year}"])
     return year_reply
+
+
+def hour_for_country(command):
+    # Busca el país dentro del parámetro
+
+    country_match = re.compile(
+        r'(qué hora es en|qué hora son en|'
+        r'cuál es la hora en|dime la hora de|me la hora de) (' + '|'.join(
+            re.escape(pais) for pais in hour_zone.keys()) + ')', command, re.IGNORECASE)
+
+    if country_match:
+        # Obtengo el país de la expresión re.
+        country = country_match.group(2).capitalize()
+
+        if country in hour_zone:
+            # Busca la zona horaria correspondiente
+            target_timezone = hour_zone.get(country, '')
+
+            print(f"la hora de ese pais es {target_timezone}")
+            reply = random.choice([f"En {country}, ahora mismo deben ser alrededor de las {target_timezone}",
+                                   f"La hora en {country}, son las {target_timezone}",
+                                   f"De acuerdo a la diferencia horaria, en {country} deberían ser aproximadamente las {target_timezone}.",
+                                   f"La hora actual de {country} es {target_timezone}",
+                                   f"La hora local en {country} en este momento, son las {target_timezone}"])
+
+            return reply

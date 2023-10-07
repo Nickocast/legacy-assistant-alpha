@@ -17,6 +17,7 @@ from commands import commands
 
 class EngineProject:
 
+    #--- Inicializador de variables y requerimientos necesarios del sistema ---#
     def __init__(self):
 
         self.assistant_name_normal = "Aurora"
@@ -54,6 +55,7 @@ class EngineProject:
         rate = self.tts_engine.getProperty('rate')  # Obtiene la velocidad actual
         self.tts_engine.setProperty('rate', 145)  # Cambia nuevo_rate al valor deseado
 
+    #--- Funciones de manejo de variables y Habla ---#
     def name_manager(self):
         name = self.user_name
         return name
@@ -68,6 +70,7 @@ class EngineProject:
         process = psutil.Process()
         return process.memory_info().rss / (1024 * 1024)  # Convertir a MB
 
+    #--- Activador del asistente ---#
     def activate_assistant(self):
         print("Escuchando activacion")
         while True:
@@ -129,7 +132,7 @@ class EngineProject:
                 elif re.search(r'buenos días| buenos días aurora|'
                                r'buen día|buen día aurora|buenas tardes|'
                                r'buenas tardes aurora|buenas noches|'
-                               r'buenas noches aurora', recognized_text):
+                               r'buenas noches aurora', recognized_text, re.IGNORECASE):
                     greeting = recognized_text
                     self.speak(module_DateTime.initial_greetings(greeting, self.user_name))
                     self.active = False
@@ -142,7 +145,7 @@ class EngineProject:
                                r'gracias por el favor aurora|'
                                r'gracias por el favor|'
                                r'gracias por hacerlo aurora|'
-                               r'gracias por hacerlo|bien|bien hecho', recognized_text):
+                               r'gracias por hacerlo|bien|bien hecho', recognized_text, re.IGNORECASE):
                     tk = recognized_text
                     self.speak(commands.gratitude(tk, self.user_name))
                     print(commands.gratitude(tk, self.user_name))
@@ -152,6 +155,7 @@ class EngineProject:
                     print(f"Memoria máxima utilizada desde la activación hasta el comando: {self.max_memory_used} MB")
                     print("Vuelta a Escuchando activacion")
 
+    #--- Motor de comandos ---#
     def command_engine(self):
         while self.active:
             data = self.stream.read(4896)
@@ -165,67 +169,80 @@ class EngineProject:
                     elif self.command_level == self.command_level_advanced:
                         self.command_advanced_handle(recognized_text)
 
+    #--- Manejador de comandos Nivel Normal ---#
     def command_normal_handle(self, command):
 
-        # OBTENCION Y MANEJO DE COMANDOS NORMALES
-        recognize = command
+        recognized = command
 
-        # Comando para olvidar pedido del comando
+        #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES #=#=#=#=#=#=#
+
+        #--- Comando para olvidar pedido del comando ---#
         if re.search(r'(olvídalo|olvídate|no importa|déjalo|'
                      r'no realices nada|no realice nada|no hagas nada|'
-                     r'mejor no)', recognize):
+                     r'mejor no)', recognized, re.IGNORECASE):
             self.speak(commands.cut(self.name_manager()))
             self.active = False
             self.activate_assistant()
 
-        # Comando  de hora actual
+            # --- Comando  de hora actual ---#
         if re.search(r'(qué hora es|qué hora son|'
-                     r'cuál es la hora|dime la hora|hora)', recognize):
-            self.speak(module_DateTime.hour_now())
-            self.active = False
-            self.activate_assistant()
+                         r'cuál es la hora|dime la hora|hora)', recognized, re.IGNORECASE):
+                self.speak(module_DateTime.hour_now())
+                self.active = False
+                self.activate_assistant()
 
-        # Comando de fecha actual
-        if re.search(
-                r'(qué fecha tenemos hoy|me puedes informar la fecha de hoy|me puedes informar en que fecha estamos|'
+        # --- Comando de hora por país ---#
+        """hour_country_pattern = re.search(r'(qué hora es en|qué hora son en|'
+                    r'cuál es la hora en|dime la hora de|me la hora de) '
+                    r'(' + '|'.join(re.escape(pais) for pais in module_DateTime.hour_zone.keys()) + ')',re.IGNORECASE)
+        if hour_country_pattern.search(recognize):
+                self.speak(module_DateTime.hour_for_country(recognize))
+                self.active = False
+                self.activate_assistant()"""
+
+        #--- Comando de fecha actual ---#
+        if re.search(r'(qué fecha tenemos hoy|me puedes informar la fecha de hoy|me puedes informar en que fecha estamos|'
                 r'necesito saber la fecha de hoy|en qué fecha estamos'
                 r'necesito saber en qué fecha estamos|necesito saber la fecha|'
-                r'qué día es hoy|en qué día estamos|qué día es hoy)|día de hoy', recognize):
+                r'qué día es hoy|en qué día estamos|qué día es hoy)|día de hoy', recognized, re.IGNORECASE):
             self.speak(module_DateTime.date())
             self.active = False
             self.activate_assistant()
 
-        # Comando de mes actual
-        if re.search(
-                r'en qué mes estamos|que me estámos|que mes estamos|me puedes informar el mes en el que estamos'
+        #--- Comando de mes actual ---#
+        if re.search(r'en qué mes estamos|que me estámos|que mes estamos|me puedes informar el mes en el que estamos'
                 r'necesito saber el mes actual'
                 r'necesito saber en qué mes estamos'
-                r'qué mes estamos|mes actual|mesa actual|me actual|cuál es el mes actual', recognize):
+                r'qué mes estamos|mes actual|mesa actual|me actual|cuál es el mes actual', recognized, re.IGNORECASE):
             self.speak(module_DateTime.month_now())
             self.active = False
             self.activate_assistant()
 
-        # Comando  de año actual
+        #--- Comando  de año actual ---#
         if re.search(r'(en qué año estamos|qué año es|'
-                     r'dime el año actual|dime el año)', recognize):
+                     r'dime el año actual|dime el año)', recognized, re.IGNORECASE):
             self.speak(module_DateTime.year_now())
             self.active = False
             self.activate_assistant()
 
+
+
+    #--- Manejador de comandos Nivel Avanzado ---#
     def command_advanced_handle(self, command):
 
-        # Manejo de comandos avanzados(todos debajo)
-        if self.command_level_advanced:
+        recognized = command
+        #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES AVANZADAS #=#=#=#=#=#=#
 
-            # Comando base para cortar comandos:
-
-            if re.search(r'(necesito\s+tu\s+ayuda|ayuda\s+por\s+favor)', command):
-                print(f"Si, {self.user_name}!")
-                self.speak("Si " + self.user_name)
-                self.activate_assistant()
+        # --- Comando para olvidar pedido del comando ---#
+        if re.search(r'(olvídalo|olvídate|no importa|déjalo|'
+                     r'no realices nada|no realice nada|no hagas nada|'
+                     r'mejor no)', recognized, re.IGNORECASE):
+            self.speak(commands.cut(self.name_manager()))
+            self.active = False
+            self.activate_assistant()
 
 
 engine = EngineProject()
-print("Virtual Assistant - Aurora v0.5 alpha.")
+print("Virtual Assistant - Proyecto Aurora v0.5.15 alpha.")
 # engine.speak("Asistente de comandos de voz inicializado y listo para servir")
 engine.activate_assistant()

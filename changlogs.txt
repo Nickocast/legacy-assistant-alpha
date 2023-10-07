@@ -1,7 +1,7 @@
 
 ##########Actualizaciones del código desde la v0.5##########
 
-#Actualización v.0.5.14
+#Actualización v.0.5.15
 -----------------------------------------------------------------------------------------------------
 * Se agregó el módulo DateTime (Manejo de tiempo)
 * Se corrigió errores de ejecución en el código base;
@@ -17,5 +17,6 @@
 * Se agregó el comando para pedir el mes actual;
 * Se agregó el comando para pedir el año actual;
 * Correcciones menores en la codificación.
+* Se actualizó el nombre de la versión de "Virtual Assistant - Aurora v0.5 alpha." a "Virtual Assistant - Proyecto Aurora v0.5.15 alpha."
 
 
