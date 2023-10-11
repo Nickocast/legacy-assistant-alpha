@@ -21,11 +21,11 @@ class EngineProject:
     def __init__(self):
 
         self.assistant_name_normal = "Aurora"
-        self.assistant_name_advanced = "Forex"
+        self.assistant_name_advanced = "Charlie"
         self.user_name = "Nicolás"
         self.command_level_normal = "normal"
         self.command_level_advanced = "advanced"
-        self.model = Model(r"D:\Proyectos\Project Aurora\Aurora_project\v-model-small-es-0.42")
+        self.model = Model(r"D:\Proyectos\Project Aurora\Aurora_project\languajes_models\v-model-small-es-0.42")
         self.recognizer = KaldiRecognizer(self.model, 16000)
         self.active = False  # Indica si el asistente está activo o no
         self.waiting_for_input = False
@@ -68,7 +68,8 @@ class EngineProject:
     # metodo para convertir memoria en MB
     def get_memory_usage(self):
         process = psutil.Process()
-        return process.memory_info().rss / (1024 * 1024)  # Convertir a MB
+        memory_usage = process.memory_info().rss / (1024 * 1024)  # Convertir a MB
+        return int(round(memory_usage, 1))
 
     #--- Activador del asistente ---#
     def activate_assistant(self):
@@ -176,14 +177,15 @@ class EngineProject:
 
         #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES #=#=#=#=#=#=#
 
-        #--- Comando para olvidar pedido del comando ---#
+        #--- Comando para olvidar pedido del comando ---#ORIGINAL
         if re.search(r'(olvídalo|olvídate|no importa|déjalo|'
                      r'no realices nada|no realice nada|no hagas nada|'
-                     r'mejor no)', recognized, re.IGNORECASE):
+                     r'mejor no|nada gracias|nada|que te olvídes)', recognized, re.IGNORECASE):
             self.speak(commands.cut(self.name_manager()))
             self.active = False
             self.activate_assistant()
 
+        ##########COMANDOS DE HORARIO Y FECHA##########
             # --- Comando  de hora actual ---#
         if re.search(r'(qué hora es|qué hora son|'
                          r'cuál es la hora|dime la hora|hora)', recognized, re.IGNORECASE):
@@ -227,6 +229,11 @@ class EngineProject:
 
 
 
+        else:
+            self.speak(commands.no_recognize_command(self.user_name))
+
+
+
     #--- Manejador de comandos Nivel Avanzado ---#
     def command_advanced_handle(self, command):
 
@@ -243,6 +250,6 @@ class EngineProject:
 
 
 engine = EngineProject()
-print("Virtual Assistant - Proyecto Aurora v0.5.15 alpha.")
+print("Virtual Assistant - Proyecto Aurora v0.5.17 alpha.")
 # engine.speak("Asistente de comandos de voz inicializado y listo para servir")
 engine.activate_assistant()

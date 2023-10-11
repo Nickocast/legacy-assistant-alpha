@@ -1,7 +1,9 @@
+#/Fecha de inicio del proyecto: 3 de octubre de 2023
+#/Nombre del creador"Nicolás A. Castillo
 
 ##########Actualizaciones del código desde la v0.5##########
 
-#Actualización v.0.5.15
+#Actualización v.0.5.16
 -----------------------------------------------------------------------------------------------------
 * Se agregó el módulo DateTime (Manejo de tiempo)
 * Se corrigió errores de ejecución en el código base;
@@ -16,7 +18,12 @@
 * Se agregó el comando para pedir la hora actual;
 * Se agregó el comando para pedir el mes actual;
 * Se agregó el comando para pedir el año actual;
-* Correcciones menores en la codificación.
-* Se actualizó el nombre de la versión de "Virtual Assistant - Aurora v0.5 alpha." a "Virtual Assistant - Proyecto Aurora v0.5.15 alpha."
+* Correcciones menores en la codificación;
+* Se actualizó el nombre de la versión de "Virtual Assistant - Aurora v0.5 alpha." a "Virtual Assistant - Proyecto Aurora v0.5.15 alpha.";
+* Se agregó respuestas variantes de comando no reconocido, para la función command_normal_handle();
 
+##########Actualizaciones del código desde la v0.6##########
 
+#Actualización v.0.6.16
+-----------------------------------------------------------------------------------------------------
+**Implementación del módulo de clima
