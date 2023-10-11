@@ -1,8 +1,20 @@
 #/Fecha de inicio del proyecto: 3 de octubre de 2023
 #/Nombre del creador"Nicolás A. Castillo
 
-##########Actualizaciones del código desde la v0.5##########
+##########Actualizaciones del código desde la v0.6##########
+#Actualización v.0.6.22
+-----------------------------------------------------------------------------------------------------
+**Implementación importante: Módulo de clima
+* Se implemento la función de clima actual;
+* Se implemento la función de pregunta sobre utilizar abrigo dependiendo la temperatura;
+* Se agregó un corte de escucha de comandos al pasar los 3 intentos, para que vuelva a escuchar el nombre de llamado,
+  solucionando así que respondiera a cada parlabra o ruido no entendido infinitamente.
+* Se agregaron variantes de respuestás a la función: coat_desition del módulo de clima;
+* Se agregaron accesos de variables del modulo de clima en el modulo main;
+* Se corrigieron errores de palabras del reconocimiento de voz.
 
+
+##########Actualizaciones del código desde la v0.5##########
 #Actualización v.0.5.16
 -----------------------------------------------------------------------------------------------------
 * Se agregó el módulo DateTime (Manejo de tiempo)
@@ -22,16 +34,4 @@
 * Se actualizó el nombre de la versión de "Virtual Assistant - Aurora v0.5 alpha." a "Virtual Assistant - Proyecto Aurora v0.5.15 alpha.";
 * Se agregó respuestas variantes de comando no reconocido, para la función command_normal_handle();
 
-##########Actualizaciones del código desde la v0.6##########
-
-#Actualización v.0.6.22
------------------------------------------------------------------------------------------------------
-**Implementación importante: Módulo de clima
-* Se implemento la función de clima actual;
-* Se implemento la función de pregunta sobre utilizar abrigo dependiendo la temperatura;
-* Se agregó un corte de escucha de comandos al pasar los 3 intentos, para que vuelva a escuchar el nombre de llamado,
-  solucionando así que respondiera a cada parlabra o ruido no entendido infinitamente.
-* Se agregaron variantes de respuestás a la función: coat_desition del módulo de clima;
-* Se agregaron accesos de variables del modulo de clima en el modulo main;
-* Se corrigieron errores de palabras del reconocimiento de voz.
 
