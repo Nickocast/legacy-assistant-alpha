@@ -167,13 +167,3 @@ def coat_desicion(name, url, api_key, url_geo, city, time_zone_UNIX):
         # return "Error en la solicitud de geolocalización."
         return "Error en la solicitud de geolocalización."
 
-
-def get_range_time(hour):
-    if hour in morning:
-        return "la mañana"
-    elif hour in afternoon:
-        return "la tarde"
-    elif hour in evening:
-        return "la noche"
-    else:
-        return "un momento no definido"

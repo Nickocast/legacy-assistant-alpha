@@ -2,7 +2,7 @@
 #/Nombre del creador"Nicolás A. Castillo
 
 ##########Actualizaciones del código desde la v0.6##########
-#Actualización v.0.6.22
+#Actualización v.0.6.23
 -----------------------------------------------------------------------------------------------------
 **Implementación importante: Módulo de clima
 * Se implemento la función de clima actual;
@@ -12,6 +12,7 @@
 * Se agregaron variantes de respuestás a la función: coat_desition del módulo de clima;
 * Se agregaron accesos de variables del modulo de clima en el modulo main;
 * Se corrigieron errores de palabras del reconocimiento de voz.
+* Se agregó una variable de intentos de comandos fallidos en main.
 
 
 ##########Actualizaciones del código desde la v0.5##########
