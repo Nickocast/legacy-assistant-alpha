@@ -11,7 +11,8 @@ import pyttsx3
 import psutil
 import json
 
-from modules import module_DateTime
+#Modulos del proyecto
+from modules import module_DateTime, module_weather
 from commands import commands
 
 
@@ -19,12 +20,20 @@ class EngineProject:
 
     #--- Inicializador de variables y requerimientos necesarios del sistema ---#
     def __init__(self):
-
+        #variables del programa#
         self.assistant_name_normal = "Aurora"
         self.assistant_name_advanced = "Charlie"
         self.user_name = "Nicolás"
         self.command_level_normal = "normal"
         self.command_level_advanced = "advanced"
+        self.recognize_failed = 0
+        self.url = module_weather.url
+        self.api_key = module_weather.api_key
+        self.url_geo = module_weather.url_geo
+        self.city = module_weather.city
+        self.time_zone_UNIX = module_weather.time_zone_UNIX
+
+        #Modelo de reconocimiento de lenguaje
         self.model = Model(r"D:\Proyectos\Project Aurora\Aurora_project\languajes_models\v-model-small-es-0.42")
         self.recognizer = KaldiRecognizer(self.model, 16000)
         self.active = False  # Indica si el asistente está activo o no
@@ -146,7 +155,7 @@ class EngineProject:
                                r'gracias por el favor aurora|'
                                r'gracias por el favor|'
                                r'gracias por hacerlo aurora|'
-                               r'gracias por hacerlo|bien|bien hecho', recognized_text, re.IGNORECASE):
+                               r'gracias por hacerlo', recognized_text, re.IGNORECASE):
                     tk = recognized_text
                     self.speak(commands.gratitude(tk, self.user_name))
                     print(commands.gratitude(tk, self.user_name))
@@ -154,7 +163,7 @@ class EngineProject:
 
                 if not self.active:
                     print(f"Memoria máxima utilizada desde la activación hasta el comando: {self.max_memory_used} MB")
-                    print("Vuelta a Escuchando activacion")
+                    print("Escuchando activacion")
 
     #--- Motor de comandos ---#
     def command_engine(self):
@@ -174,7 +183,6 @@ class EngineProject:
     def command_normal_handle(self, command):
 
         recognized = command
-
         #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES #=#=#=#=#=#=#
 
         #--- Comando para olvidar pedido del comando ---#ORIGINAL
@@ -227,10 +235,29 @@ class EngineProject:
             self.active = False
             self.activate_assistant()
 
+        ##########COMANDOS DE CLIMATOLOGÍA##########
+        #--- Comando para pedir el clima actual ---#
+        if re.search(r'(cuál es la temperatura|cuántos grados está haciendo|cuál es el clima de hoy|'
+                     r'cuál es el clima de hoy|qué temperatura hace|cuanta temperatura hace|qué temperatura anuncia hoy|'
+                     r'cuántos grados hace|qué clima hace|cómo está el clima|cómo está afuera|cómo están afuera)', recognized, re.IGNORECASE):
+            self.speak(module_weather.forecast_for_today(self.user_name, self.url, self.api_key, self.url_geo, self.city, self.time_zone_UNIX))
+            self.active = False
+            self.activate_assistant()
+
+        if re.search(r'(esta frío|hace calor|tengo que usar campera|tengo que abrigarme|me abrigo)', recognized, re.IGNORECASE):
+            self.speak(module_weather.coat_desicion(self.user_name, self.url, self.api_key, self.url_geo, self.city, self.time_zone_UNIX))
+            self.active = False
+            self.activate_assistant()
 
 
         else:
+            self.recognize_failed += 1
             self.speak(commands.no_recognize_command(self.user_name))
+            if self.recognize_failed >= 3:
+                self.recognize_failed = 0
+                self.active = False
+                engine.activate_assistant()
+
 
 
 
@@ -250,6 +277,5 @@ class EngineProject:
 
 
 engine = EngineProject()
-print("Virtual Assistant - Proyecto Aurora v0.5.17 alpha.")
-# engine.speak("Asistente de comandos de voz inicializado y listo para servir")
+print("Virtual Assistant - Proyecto Aurora v0.6.16 alpha.")
 engine.activate_assistant()
