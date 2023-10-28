@@ -259,8 +259,6 @@ class EngineProject:
                 engine.activate_assistant()
 
 
-
-
     #--- Manejador de comandos Nivel Avanzado ---#
     def command_advanced_handle(self, command):
 
