@@ -22,10 +22,8 @@ class EngineProject:
     def __init__(self):
         #variables del programa#
         self.assistant_name_normal = "Aurora"
-        self.assistant_name_advanced = "Charlie"
         self.user_name = "Nicolás"
         self.command_level_normal = "normal"
-        self.command_level_advanced = "advanced"
         self.recognize_failed = 0
         self.url = module_weather.url
         self.api_key = module_weather.api_key
@@ -94,25 +92,7 @@ class EngineProject:
                 memory_at_activation = self.get_memory_usage()
                 print(f"Uso de memoria al activar el asistente: {memory_at_activation} MB")
 
-                if recognized_text == self.assistant_name_advanced.lower():
-                    self.command_level = self.command_level_advanced
-                    self.active = True
-                    print(f"Sistema activado en modo {self.command_level} y escuchando...")
-                    reply = random.choice(["¿En que te ayudo " + self.user_name + "?",
-                                           "¿En que te puedo servir?",
-                                           "Sí, " + self.user_name,
-                                           "Sí, " + self.user_name + " Dime",
-                                           "Sí, " + self.user_name + " Dime tu orden",
-                                           "¿Que necesitas que realice?",
-                                           "¿Que necesitas" + self.user_name + "?",
-                                           "Dime tu orden" + self.user_name,
-                                           "Dime, " + self.user_name])
-                    self.speak(reply)
-                    engine.command_engine()
-                    self.active = False
-                    break
-
-                elif recognized_text == self.assistant_name_normal.lower():
+                if recognized_text == self.assistant_name_normal.lower():
                     self.command_level = self.command_level_normal
                     self.active = True
                     print(f"Sistema activado en modo {self.command_level} y escuchando...")
@@ -175,12 +155,10 @@ class EngineProject:
                     recognized_text = text[14:-3].lower()
                     print(recognized_text)
                     if self.command_level == self.command_level_normal:
-                        self.command_normal_handle(recognized_text)
-                    elif self.command_level == self.command_level_advanced:
-                        self.command_advanced_handle(recognized_text)
+                        self.command_handle(recognized_text)
 
     #--- Manejador de comandos Nivel Normal ---#
-    def command_normal_handle(self, command):
+    def command_handle(self, command):
 
         recognized = command
         #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES #=#=#=#=#=#=#
@@ -258,20 +236,6 @@ class EngineProject:
                 self.active = False
                 engine.activate_assistant()
 
-
-    #--- Manejador de comandos Nivel Avanzado ---#
-    def command_advanced_handle(self, command):
-
-        recognized = command
-        #=#=#=#=#=#=# FUNCIONES FUNDAMENTALES AVANZADAS #=#=#=#=#=#=#
-
-        # --- Comando para olvidar pedido del comando ---#
-        if re.search(r'(olvídalo|olvídate|no importa|déjalo|'
-                     r'no realices nada|no realice nada|no hagas nada|'
-                     r'mejor no)', recognized, re.IGNORECASE):
-            self.speak(commands.cut(self.name_manager()))
-            self.active = False
-            self.activate_assistant()
 
 
 engine = EngineProject()
