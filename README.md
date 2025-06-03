@@ -34,3 +34,32 @@ El sistema se basa en el uso de reconocimiento de voz con **VOSK** y generación
 - `psutil` (Monitoreo de recursos)
 - API externa de clima (requiere clave API y ciudad configurada)
 - Estructura modular personalizada (`modules/`, `commands/`)
+
+---
+
+## 🚧 Estado del Proyecto
+
+- ✅ Funcional como asistente de pruebas local.
+- ⚠️ Obsoleto: no se recomienda usar esta versión como base para nuevos desarrollos.
+- 🧠 Reemplazado por un nuevo proyecto **rediseñado desde cero** con arquitectura mejorada, manejo eficiente de contexto, sistema emocional y personalidad programática.
+
+---
+
+## 🔒 Notas Importantes
+
+- Este proyecto fue desarrollado como un experimento personal con fines educativos.
+- No contiene backdoors, comandos maliciosos ni recolección de datos.
+
+---
+
+## 🧠 Autor
+
+**Nicolás**  
+Desarrollador recibido y autodidacta actualmente.  
+Este proyecto fue el inicio del camino hacia A.U.R.O.R.A., una IA que pretende tener una personalidad, comprensión emocional real, entre otras muchas cosas.
+
+---
+
+## 🗃️ Licencia
+
+Este repositorio es privado o de uso educativo personal. Si decides reutilizar partes del código, se agradece el reconocimiento.
