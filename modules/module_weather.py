@@ -29,10 +29,10 @@ dictionary_1 = {
 
 }
 # Variables API OpenWeather
-api_key = "a810ccb0b9cb5ba0b21f49978a642466"
+api_key = "x"
 url_geo = "http://api.openweathermap.org/geo/1.0/direct?"
 url = "http://api.openweathermap.org/data/2.5/forecast?"
-city = "General Fotheringham, Córdoba, Argentina"
+city = "x"
 lang = "es"
 
 # Variables modulo
