@@ -57,9 +57,3 @@ El sistema se basa en el uso de reconocimiento de voz con **VOSK** y generación
 **Nicolás**  
 Desarrollador recibido y autodidacta actualmente.  
 Este proyecto fue el inicio del camino hacia A.U.R.O.R.A., una IA que pretende tener una personalidad, comprensión emocional real, entre otras muchas cosas.
-
----
-
-## 🗃️ Licencia
-
-Este repositorio es privado o de uso educativo personal. Si decides reutilizar partes del código, se agradece el reconocimiento.
